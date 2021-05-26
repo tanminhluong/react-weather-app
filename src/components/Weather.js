@@ -36,6 +36,7 @@ function Weather() {
     return (
         <div className="main">
             <div className="search-box">
+                <label htmlFor="">Enter city name to forecast: </label>
                 <input
                     type="text"
                     className="search-bar"
