@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 const api = {
     key: 'c3684657ec272675fe8dce189015b9f4',
@@ -9,12 +9,17 @@ function Weather() {
 
     const [query, setQuery] = useState('')
     const [weather, setWeather] = useState({})
+    const [date, setDate] = useState(new Date())
 
-    const dateBuilder = (d) => {
-        setTimeout(() => {
-            
-        }, 1000)
-        return `${d.toLocaleTimeString()}, ${d.toDateString()}`
+    useEffect(() => {
+        let timerId = setInterval(() => dateBuilder(), 1000)
+        return function cleanUp() {
+            clearInterval(timerId)
+        }
+    })
+
+    const dateBuilder = () => {
+        setDate(new Date())
     }
 
     const search = (evt) => {
@@ -53,7 +58,7 @@ function Weather() {
                             <div className="location">
                                 {weather.name}, {weather.sys.country}
                             </div>
-                            <div className="date">{dateBuilder(new Date())}</div>
+                            <div className="date">{date.toLocaleTimeString()}, {date.toDateString()}</div>
                         </div>
                         <div className="weather-info">
                             <div className={`weather-img ${weather.weather[0].main.toLowerCase()}`}>
